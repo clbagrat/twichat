@@ -1,0 +1,10 @@
+.modal {
+  position: fixed;
+  width: 80vw;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  margin-top: 50px;
+  background: white;
+  padding: 50px;
+}

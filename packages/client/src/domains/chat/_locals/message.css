@@ -1,0 +1,72 @@
+.message {
+  position: relative;
+}
+.message .userNameBlock {
+  width: fit-content;
+  position: relative;
+  border-radius: 30px;
+  border: 2px solid;
+  padding: 5px 10px 5px 5px;
+  background-color: rgb(36, 40, 45);
+}
+
+
+.message .badgeBlock {
+  width: 35px;
+  height: 35px;
+  position: relative;
+  border-radius: 29px;
+  border: 1px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(36, 40, 45);
+}
+
+.message .badgeBlock img {
+  width: 20px;
+  height: 20px;
+}
+
+.message .circle {
+  width: 25px;
+  height: 25px;
+  border-radius: 15px;
+}
+
+.message .userName {
+}
+
+@keyframes likeGiven {
+  from {
+    opacity: 0;
+    transform: scale(3);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.message .messageLikeHeart {
+  width: 30px;
+  height: 30px;
+  position: absolute;
+  opacity: 0;
+  bottom: -15px;
+  left: 15px;
+  transform: scale(0);
+  z-index: 1;
+}
+
+.message.liked .messageLikeHeart {
+  animation: likeGiven 0.2s forwards;
+}
+
+.message.liked .messageLikeHeart img{
+  width: 30px;
+  height: 30px;
+}
+
+

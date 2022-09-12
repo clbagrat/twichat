@@ -1,0 +1,32 @@
+.inline {
+  display: flex;
+  flex-direction: row;
+}
+
+.inline.zero {
+  gap: 0px;
+}
+
+.inline.s {
+  gap: 4px;
+}
+
+.inline.m {
+  gap: 8px;
+}
+
+.inline.l {
+  gap: 12px;
+}
+
+.inline.vStart {
+  align-items: flex-start;
+}
+
+.inline.vCenter {
+  align-items: center;
+}
+
+.inline.vEnd {
+  align-items: end;
+}

@@ -1,0 +1,23 @@
+.text {
+  margin: 0;
+  padding: 0;
+  color: rgb(206, 209, 214);
+}
+
+.text.s {
+  font-size: 16px;
+}
+.text.m {
+  font-size: 20px;
+}
+.text.l {
+  font-size: 24px;
+}
+
+.text.inline {
+  display: inline
+}
+
+.text.bold {
+  font-weight: bold;
+}

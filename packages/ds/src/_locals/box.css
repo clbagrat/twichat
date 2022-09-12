@@ -1,0 +1,26 @@
+.box {
+  border-radius: 12px;
+  border: 1px solid #474646;
+  box-shadow: rgb(0 0 0 / 0%) 0px 0.3px 0.6px, rgb(0 0 0 / 7%) 0px 2px 5px;
+  background-color: rgb(36, 40, 45);
+}
+
+.box.fitContent {
+  width: fit-content;
+}
+
+.box.highlighted {
+  border-color: aqua;
+}
+
+.box.s {
+  padding: 4px
+}
+
+.box.m {
+  padding: 8px
+}
+
+.box.l {
+  padding: 122px
+}

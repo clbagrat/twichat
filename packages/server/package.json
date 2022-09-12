@@ -1,0 +1,28 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "env-cmd -f ../../.env nodemon ./index.ts"
+  },
+  "keywords": [],
+  "author": "clbagrat",
+  "license": "ISC",
+  "dependencies": {
+    "@twurple/api": "^5.2.4",
+    "@twurple/auth": "^5.2.3",
+    "@twurple/chat": "^5.2.3",
+    "@twurple/eventsub": "^5.2.4",
+    "@twurple/eventsub-ngrok": "^5.2.4",
+    "@types/express": "^4.17.13",
+    "@types/node": "^18.7.11",
+    "@types/ws": "^8.5.3",
+    "env-cmd": "^10.1.0",
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "ws": "^8.8.1"
+  }
+}
