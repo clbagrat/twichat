@@ -7,12 +7,12 @@ import { Stack, Inline, Box, Text } from 'ds'
 import url from './heart.png';
 
 type MessageProps = {
-  user?: User;
+  user: User;
   isLiked?: boolean;
   content: MessageType["content"];
 };
 
-export const Message = ({ content, user = {}, isLiked }: MessageProps) => {
+export const Message = ({ content, user, isLiked }: MessageProps) => {
   return (
     <div className={cn("message", { liked: isLiked })}>
       <Stack space="s">

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Payload } from "common/types";
 import { useSubscribeToAction } from "../connect/useSubscribeToAction";
 import { Message } from './_locals/Message';
@@ -84,7 +84,7 @@ export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
   );
 
 
-  const [isFocused, setIsFocused] = useState<boolean>(false);
+  const [focusedId, setFocusedId] = useState<string>(null);
   const [isPaused, setIsPaused] = useState<boolean>(false);
 
   const document = useDependency<Document>("document");
@@ -109,39 +109,33 @@ export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
   useSubscribeToAction("announcements", "rewardRedemption", (payload) => {
     setRewards({
       ...rewards,
-      [payload.id]: payload
+      [payload.id]: payload,
     });
 
-    let li = [...lines, {
-      type: "reward",
-      id: payload.id
-    } as ChatLine];
+    let li = [
+      ...lines,
+      {
+        type: "reward",
+        id: payload.id,
+      } as ChatLine,
+    ];
     setLines(li.slice(-limit));
   });
-  
-    const scrollBott = () => document.body.scrollTop = document.body.scrollHeight;
+
+  const scrollBott = () => {
+    window.scrollTo({
+      top: document.body.scrollHeight,
+      behavior: "smooth"
+    });
+  }
 
   useEffect(() => {
-    if (isPaused) {
+    if (focusedId) {
       return;
     }
     scrollBott();
+  }, [lines.length, focusedId]);
 
-  }, [lines.length, isPaused]);
-
-  useEffect(() => {
-    const onScroll = () => {
-      setIsPaused(
-        Math.floor(window.scrollY + window.innerHeight) !==
-          Math.floor(document.body.scrollHeight)
-      );
-    };
-
-    document.addEventListener("scroll", onScroll);
-    return () => {
-      document.removeEventListener("scroll", onScroll);
-    };
-  }, [setIsPaused]);
 
   useSubscribeToAction("chat", "messageRemove", (payload) => {
       if (messages[payload.id] === undefined) {
@@ -160,21 +154,39 @@ export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
       });
   });
 
-  useSubscribeToAction("focus", "messageFocus", () => {
-    setIsFocused(true);
+  const messageRefs = useRef<Record<string, HTMLElement>>({});
+
+  useSubscribeToAction("focus", "messageFocus", ({message}) => {
+    setFocusedId(message.id);
+    messageRefs.current[message.id]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    })
   });
 
   useSubscribeToAction("focus", "messageUnfocus", () => {
-    setIsFocused(false);
+    setFocusedId(null);
+    scrollBott();
   });
 
   return (
-    <div style={{ opacity: isFocused ? 0.5 : 1, padding: "5px" }}>
+    <div>
       <Stack space="l">
         {lines.map(({ type, id }) => {
           if (type === "message") {
             return (
-              <div key={id} onClick={() => {onMessageClick(messages[id])}}>
+              <div
+                style={{
+                  opacity: focusedId && focusedId !== id ? 0.5 : 1
+                }}
+                key={id}
+                ref={(node) => {
+                  messageRefs.current[id] = node;
+                }}
+                onClick={() => {
+                  onMessageClick(messages[id]);
+                }}
+              >
                 <Message
                   content={messages[id].message.content}
                   user={messages[id].user}
