@@ -99,6 +99,7 @@ export class TwichatMain {
 
   private EventSubHandlers = [
     eventSubHandler("subscribeToChannelRedemptionAddEvents", async (data) => {
+      console.log('reward', data.rewardTitle, data.input, data.id);
       const user = await data.getUser();
       this.connector.broadcast("announcements", "rewardRedemption", {
         userName: user.displayName,
@@ -108,6 +109,7 @@ export class TwichatMain {
       });
     }),
     eventSubHandler("subscribeToChannelFollowEvents", async (data) => {
+      console.log('follow', data.userDisplayName );
       this.connector.broadcast("announcements", "newFollow", {
         userName: data.userDisplayName,
         id: data.followDate.getTime().toString()
