@@ -134,7 +134,7 @@ export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
       return;
     }
     scrollBott();
-  }, [lines.length, focusedId]);
+  }, [lines, focusedId]);
 
 
   useSubscribeToAction("chat", "messageRemove", (payload) => {
