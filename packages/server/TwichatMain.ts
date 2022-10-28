@@ -80,8 +80,13 @@ export class TwichatMain {
 
       const user = this.userPipeline.transform(userInfo);
 
+      let isFirstToday = false;
+      if (!this.users[user.id]) {
+        isFirstToday = true;
+      }
+
       this.users[user.id] ??= user;
-      const message: Message = this.messagePipeline.transform(msg);
+      const message: Message = this.messagePipeline.transform(msg, isFirstToday);
 
       this.messages.push(message);
 

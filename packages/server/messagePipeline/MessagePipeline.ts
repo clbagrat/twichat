@@ -10,11 +10,12 @@ export class MessagePipeline {
   constructor(private integrations: IMessageTransformer[]) {
   }
 
-  private createMessage(msg: TwitchPrivateMessage): Message {
+  private createMessage(msg: TwitchPrivateMessage, isFirstToday: boolean): Message {
     const { userInfo, id } = msg;
     return {
         userId: userInfo.userId,
         id: id,
+        isFirstToday,
         content: msg.parseEmotes().map((content) => {
           if (content.type === "emote") {
             return {
@@ -36,8 +37,8 @@ export class MessagePipeline {
     }
   }
 
-  transform(message: TwitchPrivateMessage): Message {
-    let cur = this.createMessage(message);
+  transform(message: TwitchPrivateMessage, isFirstToday = false): Message {
+    let cur = this.createMessage(message, isFirstToday);
 
     for (let integraion of this.integrations) {
       if (integraion.isReady()) {

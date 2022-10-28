@@ -191,6 +191,7 @@ export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
                   content={messages[id].message.content}
                   user={messages[id].user}
                   isLiked={messages[id].message.isLiked}
+                  isFirstToday={messages[id].message.isFirstToday}
                 />
               </div>
             );

@@ -70,3 +70,15 @@
 }
 
 
+.message.new:before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 3px;
+  left: 0;
+  top: 0;
+  background: white;
+  border-radius: 5px;
+  left: -5px;
+}
+

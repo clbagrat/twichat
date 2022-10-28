@@ -23,5 +23,5 @@ export const useSubscribeToAction = <T extends WsChannelType, A extends Actions<
     return () => {
       connect.removeEventListener("message", listener);
     };
-  }, [cb]);
+  }, [cb, connect]);
 };

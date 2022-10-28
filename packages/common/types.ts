@@ -28,6 +28,7 @@ export type Message = {
   userId: string;
   id: string;
   isLiked?: boolean;
+  isFirstToday: boolean;
   content: MessageContent[]
 }
 

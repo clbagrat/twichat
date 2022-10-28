@@ -9,12 +9,13 @@ import url from './heart.png';
 type MessageProps = {
   user: User;
   isLiked?: boolean;
+  isFirstToday?: boolean;
   content: MessageType["content"];
 };
 
-export const Message = ({ content, user, isLiked }: MessageProps) => {
+export const Message = ({ content, user, isLiked, isFirstToday }: MessageProps) => {
   return (
-    <div className={cn("message", { liked: isLiked })}>
+    <div className={cn("message", { liked: isLiked, new: isFirstToday })}>
       <Stack space="s">
         {user && (
           <Inline space="l" vAlign="center">
