@@ -29,6 +29,7 @@ const authProvider = new ClientCredentialsAuthProvider(
 const apiClient = new ApiClient({ authProvider });
 
 server.listen(process.env.PORT || 8999, async () => {
+  const connector = new Connector(wss);
   const a = server.address() as AddressInfo;
   const user = await apiClient.users.getUserByName(getEnvVar("TWITCH_CHANNEL"));
   await apiClient.eventSub.deleteAllSubscriptions();
@@ -55,7 +56,6 @@ server.listen(process.env.PORT || 8999, async () => {
     channels: [getEnvVar("TWITCH_CHANNEL")],
   });
 
-  const connector = new Connector(wss);
 
   new TwichatMain(
     user,
@@ -71,7 +71,7 @@ server.listen(process.env.PORT || 8999, async () => {
   );
 
   chatClient.connect().then(() => {
-    console.log("connected");
+    console.log("chat client is ready");
   });
 
   console.log(`Server started on  ${a.address}  ${a.port})`);
