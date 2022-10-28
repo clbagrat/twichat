@@ -4,6 +4,7 @@ import { Host } from '../../domains/host/Host';
 import { DependencyProvider } from "../../domains/dependencies/dependency";
 import { mainDependencies } from "../_locals/clientDependencies";
 import { ConnectProvider } from "../../domains/connect/ConnectProvider";
+import {FeatureFlagProvider} from "../../domains/featureFlags/FeatureFlagProvider";
 
 const container =  document.getElementById('put-your-react-here');
 
@@ -11,7 +12,9 @@ const App = () => {
   return (
     <DependencyProvider dependencies={mainDependencies}>
       <ConnectProvider>
+        <FeatureFlagProvider flags={{firstMessage: true}}>
           <Host />
+        </FeatureFlagProvider>
       </ConnectProvider>
     </DependencyProvider>
   );

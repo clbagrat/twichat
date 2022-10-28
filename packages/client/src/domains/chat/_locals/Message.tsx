@@ -5,6 +5,7 @@ import { Stack, Inline, Box, Text } from 'ds'
 
 //@ts-ignore
 import url from './heart.png';
+import {useFeatureFlag} from '../../featureFlags/FeatureFlagProvider';
 
 type MessageProps = {
   user: User;
@@ -14,8 +15,9 @@ type MessageProps = {
 };
 
 export const Message = ({ content, user, isLiked, isFirstToday }: MessageProps) => {
+  const isFirstTodayFf = useFeatureFlag("firstMessage");
   return (
-    <div className={cn("message", { liked: isLiked, new: isFirstToday })}>
+    <div className={cn("message", { liked: isLiked, new: isFirstTodayFf && isFirstToday })}>
       <Stack space="s">
         {user && (
           <Inline space="l" vAlign="center">
