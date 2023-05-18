@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import { Chat } from '../../domains/chat/Chat';
 import { DependencyProvider } from "../../domains/dependencies/dependency";
 import { mainDependencies } from "../_locals/clientDependencies";
 import { ConnectProvider } from "../../domains/connect/ConnectProvider";
 import { FeatureFlagProvider } from '../../domains/featureFlags/FeatureFlagProvider'; 
+import { Guest } from '../../domains/guest/Guest';
 
 const container =  document.getElementById('put-your-react-here');
 
@@ -12,7 +12,7 @@ const App = () => {
     <DependencyProvider dependencies={mainDependencies}>
       <ConnectProvider>
         <FeatureFlagProvider flags={{ firstMessage: false }}>
-          <Chat />
+          <Guest />
         </FeatureFlagProvider>
       </ConnectProvider>
     </DependencyProvider>

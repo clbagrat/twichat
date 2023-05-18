@@ -72,6 +72,12 @@ export class TwichatMain {
       this.connector.broadcast("focus", "messageUnfocus", {});
       clearTimeout(this.resetFocusTimer);
     }),
+    wsHandler("host", "hostFocus", (_, __) => {
+      this.connector.broadcast("host", "hostFocus", {});
+    }),
+    wsHandler("host", "hostUnfocus", () => {
+      this.connector.broadcast("host", "hostUnfocus", {});
+    })
   ] as const;
 
   private ChatClientHandlers = [
@@ -147,7 +153,7 @@ export class TwichatMain {
     user: HelixUser,
     private connector: Connector,
     chatClient: ChatClient,
-    eventSubListener: EventSubListener,
+    eventSubListener: EventSubListener | undefined,
     private userPipeline: UserPipeline,
     private messagePipeline: MessagePipeline
   ) {
@@ -164,11 +170,14 @@ export class TwichatMain {
       chatClient[handler.action](handler.callback);
     });
 
+    if (eventSubListener) {
     this.EventSubHandlers.forEach(async (handler) => {
       //@ts-ignore
       const subscriber = await eventSubListener[handler.action](user, handler.callback);
       const cliTest = await subscriber.getCliTestCommand();
       console.log(handler.action, cliTest);
     });
+
+    }
   }
 }

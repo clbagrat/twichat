@@ -32,15 +32,21 @@ server.listen(process.env.PORT || 8999, async () => {
   const connector = new Connector(wss);
   const a = server.address() as AddressInfo;
   const user = await apiClient.users.getUserByName(getEnvVar("TWITCH_CHANNEL"));
-  await apiClient.eventSub.deleteAllSubscriptions();
+  const is_affiliate = getEnvVar("TWITCH_IS_AFFILIATE") === 'true';
 
-  const listener = new EventSubListener({
-    apiClient,
-    adapter: new NgrokAdapter(),
-    secret: getEnvVar("TWITCH_EVENT_SUB_SECRET"),
-  });
+  let listener = undefined;
 
-  await listener.listen();
+  if (is_affiliate) {
+    await apiClient.eventSub.deleteAllSubscriptions();
+
+    listener = new EventSubListener({
+      apiClient,
+      adapter: new NgrokAdapter(),
+      secret: getEnvVar("TWITCH_EVENT_SUB_SECRET"),
+    });
+
+    await listener.listen();
+  }
 
   console.log(`---------------------------------------------`);
   console.log('Please, open the link below to authorize');

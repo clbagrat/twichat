@@ -8,8 +8,6 @@ export const ConnectProvider = ({ children }: { children: React.ReactNode }) => 
   const [connectionAttempt, setConnectionAttempt] = useState<number>(0);
   const connect = useMemo(() => new WebSocket(wsUrl!), [connectionAttempt]);
 
-  console.log(Date.now());
-
   useEffect(() => {
     let timeout = 0;
     connect.onclose = connect.onerror = () => {
@@ -31,6 +29,6 @@ export const ConnectProvider = ({ children }: { children: React.ReactNode }) => 
 
 export const useConnect = () => {
   const connect = useContext(context);
-  console.log('useconneeect')
+
   return connect;
 }

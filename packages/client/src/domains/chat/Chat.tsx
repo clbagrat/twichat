@@ -9,6 +9,7 @@ import { useDataFromAction } from './_locals/useDataFromAction';
 type ChatProps = {
   limit?: number;
   onMessageClick?: (message: Payload<"chat", "newMessage">) => void
+  onMessageDoubleClick?: (message: Payload<"chat", "newMessage">) => void
 }
 
 type ChatLine = {
@@ -16,7 +17,7 @@ type ChatLine = {
   id: string
 }
 
-export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
+export const Chat = ({onMessageClick, onMessageDoubleClick, limit = 100}: ChatProps) => {
   const [lines, setLines] = useState<ChatLine[]>([])
   
   const addNewLine = (line: ChatLine) => {
@@ -184,7 +185,10 @@ export const Chat = ({onMessageClick, limit = 100}: ChatProps) => {
                   messageRefs.current[id] = node;
                 }}
                 onClick={() => {
-                  onMessageClick(messages[id]);
+                  onMessageClick?.(messages[id]);
+                }}
+                onDoubleClick={() => {
+                  onMessageDoubleClick?.(messages[id]);
                 }}
               >
                 <Message

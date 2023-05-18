@@ -3,7 +3,7 @@ import { createContext, useContext } from "react";
 
 const context = createContext(null);
 
-type AvailableFeatureFlags = 'firstMessage';
+type AvailableFeatureFlags = 'firstMessage' | 'exclusiveHost';
 
 type FeatureFlags = Record<AvailableFeatureFlags, boolean>;
 

@@ -90,7 +90,9 @@ type ActionConfig = {
   host: {
     messageSelect: IdPayload,
     messageLike: IdPayload,
-    messageUnselect: {}
+    messageUnselect: {},
+    hostFocus: {},
+    hostUnfocus: {},
   },
   focus: {
     messageFocus: MessagePaylod,

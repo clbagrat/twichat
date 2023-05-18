@@ -12,7 +12,7 @@ const App = () => {
   return (
     <DependencyProvider dependencies={mainDependencies}>
       <ConnectProvider>
-        <FeatureFlagProvider flags={{firstMessage: true}}>
+        <FeatureFlagProvider flags={{firstMessage: true, exclusiveHost: false}}>
           <Host />
         </FeatureFlagProvider>
       </ConnectProvider>
