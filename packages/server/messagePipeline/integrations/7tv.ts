@@ -11,7 +11,9 @@ export class SevenTv implements IMessageTransformer {
   private _isReady = false;
   private allEmotes: Record<string, string> = {} 
 
-  private requestEmotes(url: string) {
+  // https://7tv.io/v3/emote-sets/global
+  // https://7tv.io/v3/users/twitch/79788319
+  private requestEmotes(url: string, parseFn: (prev: any) => any) {
     let output = '';
     http.get(url, (res) => {
       res.on("data", (data) => {
@@ -22,8 +24,9 @@ export class SevenTv implements IMessageTransformer {
           const parsed = JSON.parse(output);
           this.allEmotes = {
             ...this.allEmotes,
-            ...parsed.reduce((acc: Record<string, string>, emote: any) => {
-              acc[emote.name] = emote.urls[0][1];
+            ...(parseFn(parsed)).reduce((acc: Record<string, string>, emote: any) => {
+              const {url, files} = emote.data.host;
+              acc[emote.name] = `${url}/${files[0].name}`;
               return acc;
             }, {}),
           };
@@ -36,8 +39,8 @@ export class SevenTv implements IMessageTransformer {
 
   }
   constructor(userApiUrl: string, globalApiUrl: string) {
-    this.requestEmotes(userApiUrl);
-    this.requestEmotes(globalApiUrl);
+    this.requestEmotes(userApiUrl, (prev) => prev.emote_set.emotes);
+    this.requestEmotes(globalApiUrl, (prev) => prev.emotes);
   }
 
   isReady(): boolean {
